@@ -29,3 +29,6 @@ In a separate terminal execute:
 
 ### 7. Start frontend
 `$ npm run start`
+
+This is a fork from https://github.com/dappuniversity/millow
+Special thanks to dapp university
