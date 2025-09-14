@@ -4,7 +4,6 @@ import { ethers } from 'ethers';
 // Components
 import Navigation from './components/Navigation';
 import Search from './components/Search';
-import Home from './components/Home';
 
 // ABIs
 import RealEstate from './abis/RealEstate.json'
@@ -14,13 +13,59 @@ import Escrow from './abis/Escrow.json'
 import config from './config.json';
 
 function App() {
+  const [provider, setProvider] = useState(null)
+  const [escrow, setEscrow] = useState(null)
+
+  const [account, setAccount] = useState(null)
+
+  const [homes, setHomes] = useState([])
+  const [home, setHome] = useState({})
+  const [toggle, setToggle] = useState(false);
+
+  const loadBlockchainData = async () => {
+    // TODO: 
+    // - load blockchain data
+    // - set accountsChanged to handle account changes from the wallet
+  }
+
+  useEffect(() => {
+    loadBlockchainData()
+  }, [])
+
+  const togglePop = (home) => {
+    setHome(home)
+    toggle ? setToggle(false) : setToggle(true);
+  }
 
   return (
     <div>
+      <Navigation account={account} setAccount={setAccount} />
+      <Search />
 
       <div className='cards__section'>
 
-        <h3>Welcome to Millow</h3>
+        <h3>Homes For You</h3>
+
+        <hr />
+
+        <div className='cards'>
+          {homes.map((home, index) => (
+            <div className='card' key={index} onClick={() => togglePop(home)}>
+              <div className='card__image'>
+                <img src={home.image} alt="Home" />
+              </div>
+              <div className='card__info'>
+                <h4>{home.attributes[0].value} ETH</h4>
+                <p>
+                  <strong>{home.attributes[2].value}</strong> bds |
+                  <strong>{home.attributes[3].value}</strong> ba |
+                  <strong>{home.attributes[4].value}</strong> sqft
+                </p>
+                <p>{home.address}</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
       </div>
 
